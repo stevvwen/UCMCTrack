@@ -2,7 +2,7 @@ import os
 from eval.eval import eval
 
 
-dataset_path = "E:/dataset/MOT17/train"
+dataset_path = "/usr/local/data/swen14/Workspace/MOT17/train" # TODO: Provide actual dataset path for Ground Truth evaluation
 out_path = "output/mot17"
 exp_name = "val"
 

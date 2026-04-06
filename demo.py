@@ -91,6 +91,7 @@ def main(args):
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+    os.makedirs('output', exist_ok=True)
     video_out = cv2.VideoWriter('output/output.mp4', cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))  
 
     # 打开一个cv的窗口，指定高度和宽度

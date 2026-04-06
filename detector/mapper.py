@@ -75,7 +75,7 @@ def readCamParaFile(camera_para):
                 i += 1
     except FileNotFoundError:
         print(f"Error! {camera_para} doesn't exist.")
-        return None,False
+        return None,None,False
 
     Ki = np.zeros((3, 4))
     Ki[:, :3] = IntrinsicMatrix
@@ -96,12 +96,14 @@ class Mapper(object):
             z0 = -1.73
         else:
             self.Ki,self.Ko, self.is_ok = readCamParaFile(campara_file)
-            self.KiKo = np.dot(self.Ki, self.Ko)
+            if self.is_ok:
+                self.KiKo = np.dot(self.Ki, self.Ko)
             z0 = 0
 
-        self.A[:, :2] = self.KiKo[:, :2]
-        self.A[:, 2] = z0 * self.KiKo[:, 2] + self.KiKo[:, 3]
-        self.InvA = np.linalg.inv(self.A)
+        if self.is_ok:
+            self.A[:, :2] = self.KiKo[:, :2]
+            self.A[:, 2] = z0 * self.KiKo[:, 2] + self.KiKo[:, 3]
+            self.InvA = np.linalg.inv(self.A)
 
     def uv2xy(self, uv, sigma_uv):
         if self.is_ok == False:
